@@ -3,8 +3,12 @@ import threading
 
 def receive_messages(sock):
     while True:
-        message = sock.recv(1024).decode('utf-8')
-        print(message)
+        try:
+            message = sock.recv(1024).decode('utf-8')
+            print(message)
+        except ConnectionResetError:
+            print("Server closed the connection.")
+            break
 
 # Get server information from the user
 server_ip = input("Enter server IP: ")
